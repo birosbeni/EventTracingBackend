@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "xF0SjjpWUgvgb5b+kBBwOkUeeHPGlNiFOAAwF6H1UmM=",
+  "Source": "EventTracingBackend",
+  "BasePath": "_content/EventTracingBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
