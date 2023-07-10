@@ -42,11 +42,6 @@ namespace EventTracingBackend.Repository
             return this.context.EventList.ToList();  
         }
 
-        public ICollection<Event> GetEventsByLocation(string location)
-        {
-            return this.context.EventList.Where(e => e.Location == location).ToList();
-        }
-
         public bool Save()
         {
             var saved = this.context.SaveChanges();

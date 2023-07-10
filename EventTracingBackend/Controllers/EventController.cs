@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventTracingBackend.Controllers
 {
-    [Route("Api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class EventController : Controller
     {
@@ -24,19 +24,6 @@ namespace EventTracingBackend.Controllers
         public IActionResult GetEvents()
         {
             var events = this.mapper.Map<List<EventDto>>(eventRepository.GetEvents()); 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(events);
-        }
-
-        [HttpGet("{location}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Event>))]
-        [ProducesResponseType(400)]
-        public IActionResult GetEventsByLocation(string location)
-        {
-            var events = this.mapper.Map<List<EventDto>>(eventRepository.GetEventsByLocation(location));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -63,16 +50,24 @@ namespace EventTracingBackend.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateEvent([FromBody] Event eventCreate)
+        public IActionResult CreateEvent([FromBody] CreateEvent eventCreate)
         {
+            Event _event = new Event();
+            _event.Id = Guid.NewGuid();
+            _event.Name = eventCreate.Name;
+            _event.Country = eventCreate.Country;
+            _event.Location = eventCreate.Location;
+            _event.Capacity = eventCreate.Capacity;
+            _event.CreationDate = DateTime.Now;
+
             if (eventCreate == null)
                 return BadRequest(ModelState);
                 
-            var _event = this.eventRepository.GetEvents()
-                .Where(e => e.Id == eventCreate.Id)
+            var _oldEvent = this.eventRepository.GetEvents()
+                .Where(e => e.Id == _event.Id)
                 .FirstOrDefault();
 
-            if (_event != null)
+            if (_oldEvent != null)
             {
                 ModelState.AddModelError("", "Event already exists");
                 return StatusCode(422, ModelState);
@@ -81,13 +76,13 @@ namespace EventTracingBackend.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (!this.eventRepository.CreateEvent(eventCreate))
+            if (!this.eventRepository.CreateEvent(_event))
             {
                 ModelState.AddModelError("", "Something went wrond while saving");
                 return StatusCode(500, ModelState);
             }
 
-            return Ok("Successfully created");
+            return NoContent();
         }
 
         [HttpPut("{id}")]
