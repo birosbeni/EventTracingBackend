@@ -19,6 +19,7 @@ namespace EventTracingBackend.Models
 
         public string? Country { get; set; }
 
+        [Range(0, int.MaxValue, ErrorMessage = "A kapacitán nem lehet negatív")]
         public int? Capacity { get; set; }
 
         [Required]
