@@ -1,0 +1,14 @@
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\EventTracingBackend.BusinessLogic.csproj.AssemblyReference.cache
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\EventTracingBackend.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\EventTracingBackend.BusinessLogic.AssemblyInfoInputs.cache
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\EventTracingBackend.BusinessLogic.AssemblyInfo.cs
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\EventTracingBackend.BusinessLogic.csproj.CoreCompileInputs.cache
+D:\EventTracingBackend\BusinessLogic\bin\Debug\net7.0\EventTracingBackend.BusinessLogic.deps.json
+D:\EventTracingBackend\BusinessLogic\bin\Debug\net7.0\EventTracingBackend.BusinessLogic.runtimeconfig.json
+D:\EventTracingBackend\BusinessLogic\bin\Debug\net7.0\EventTracingBackend.BusinessLogic.dll
+D:\EventTracingBackend\BusinessLogic\bin\Debug\net7.0\EventTracingBackend.BusinessLogic.pdb
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\EventTracingBackend.BusinessLogic.dll
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\refint\EventTracingBackend.BusinessLogic.dll
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\EventTracingBackend.BusinessLogic.pdb
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\EventTracingBackend.BusinessLogic.genruntimeconfig.cache
+D:\EventTracingBackend\BusinessLogic\obj\Debug\net7.0\ref\EventTracingBackend.BusinessLogic.dll

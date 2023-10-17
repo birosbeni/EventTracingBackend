@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "MX2VUGkVsO8AQEh2GZvXe3dEWD18+0EJ+eYmpwRYq1s=",
+  "Source": "EventTracingBackend.WebApi",
+  "BasePath": "_content/EventTracingBackend.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
