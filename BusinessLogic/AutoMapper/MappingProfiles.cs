@@ -7,7 +7,7 @@ namespace EventTracingBackend.BusinessLogic
     {
         public MappingProfiles()
         {
-            CreateMap<Event, EventDto>();
+            CreateMap<EventDetails, EventDto>();
         }
     }
 }

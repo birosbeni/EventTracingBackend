@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventTracingBackend.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/events")]
     [ApiController]
     public class EventController : Controller
     {
@@ -18,10 +18,10 @@ namespace EventTracingBackend.WebApi.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Event>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<EventHead>))]
         public IActionResult GetEvents()
         {
-            var events = this.mapper.Map<List<EventDto>>(eventRepository.GetEvents()); 
+            var events = eventRepository.GetEvents(); 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -30,7 +30,7 @@ namespace EventTracingBackend.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(Event))]
+        [ProducesResponseType(200, Type = typeof(EventDetails))]
         [ProducesResponseType(400)]
         public IActionResult GetEvent(Guid id)
         {
@@ -50,7 +50,7 @@ namespace EventTracingBackend.WebApi.Controllers
         [ProducesResponseType(400)]
         public IActionResult CreateEvent([FromBody] CreateEvent eventCreate)
         {
-            Event _event = new Event();
+            EventDetails _event = new EventDetails();
             _event.Id = Guid.NewGuid();
             _event.Name = eventCreate.Name;
             _event.Country = eventCreate.Country;
@@ -87,7 +87,7 @@ namespace EventTracingBackend.WebApi.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateEvent(Guid id, [FromBody] Event @event)
+        public IActionResult UpdateEvent(Guid id, [FromBody] EventDetails @event)
         {
             if (!this.eventRepository.EventExists(id))
                 return NotFound();

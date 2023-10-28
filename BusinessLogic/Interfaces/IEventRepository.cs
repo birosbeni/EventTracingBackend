@@ -2,11 +2,11 @@
 {
     public interface IEventRepository
     {
-        Event GetEvent(Guid id);
-        ICollection<Event> GetEvents();
-        bool CreateEvent(Event _event);
-        bool UpdateEvent(Event _event);
-        bool DeleteEvent(Event _event);
+        EventDetails GetEvent(Guid id);
+        ICollection<EventHead> GetEvents();
+        bool CreateEvent(EventDetails _event);
+        bool UpdateEvent(EventDetails _event);
+        bool DeleteEvent(EventDetails _event);
         bool EventExists(Guid id);
 
         bool Save();

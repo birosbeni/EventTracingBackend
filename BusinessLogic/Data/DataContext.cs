@@ -10,6 +10,6 @@ namespace EventTracingBackend.BusinessLogic
             
         }
 
-        public DbSet<Event> EventList { get; set; }
+        public DbSet<EventDetails> EventList { get; set; }
     }
 }

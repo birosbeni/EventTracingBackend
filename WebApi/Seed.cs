@@ -13,9 +13,9 @@ namespace EventTracingBackend
         {
             if (!dataContext.EventList.Any())
             {
-                var events = new List<Event>()
+                var events = new List<EventDetails>()
                 {
-                    new Event()
+                    new EventDetails()
                     {
                         Capacity = 10,
                         Country = "hun",
@@ -23,7 +23,7 @@ namespace EventTracingBackend
                         Location = "Budapest",
                         Name = "Ebéd",
                     },
-                    new Event()
+                    new EventDetails()
                     {
                         Capacity = 5,
                         Country = "ger",
@@ -31,7 +31,7 @@ namespace EventTracingBackend
                         Location = "Berlin",
                         Name = "Túra",
                     },
-                    new Event()
+                    new EventDetails()
                     {
                         Capacity = 20,
                         Country = "hun",
@@ -39,7 +39,7 @@ namespace EventTracingBackend
                         Location = "Gödöllő",
                         Name = "Munka",
                     },
-                    new Event()
+                    new EventDetails()
                     {
                         Capacity = 40,
                         Country = "hun",
@@ -47,7 +47,7 @@ namespace EventTracingBackend
                         Location = "Budapest",
                         Name = "Hajózás",
                     },
-                    new Event()
+                    new EventDetails()
                     {
                         Capacity = 25,
                         Country = "hun",
@@ -55,7 +55,7 @@ namespace EventTracingBackend
                         Location = "Budapest",
                         Name = "Heaven",
                     },
-                    new Event()
+                    new EventDetails()
                     {
                         Capacity = 11,
                         Country = "teszt",

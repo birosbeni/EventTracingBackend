@@ -12,13 +12,35 @@ namespace EventTracingBackend.BusinessLogic
             this.context = context;
         }
 
-        public bool CreateEvent(Event _event)
+        public ICollection<EventHead> GetEvents()
+        {
+            return this.context.EventList.Select(e => new EventHead
+            {
+                Id = e.Id,
+                Name = e.Name,
+                Location = e.Location,
+            })
+        .ToList();
+        }
+
+        public EventDetails GetEvent(Guid id)
+        {
+            return this.context.EventList.Where(e => e.Id == id).FirstOrDefault();
+        }
+
+        public bool CreateEvent(EventDetails _event)
         {
             this.context.Add(_event);
             return Save();
         }
 
-        public bool DeleteEvent(Event _event)
+        public bool UpdateEvent(EventDetails _event)
+        {
+            this.context.Update(_event);
+            return Save();
+        }
+
+        public bool DeleteEvent(EventDetails _event)
         {
             this.context.Remove(_event);
             return Save();
@@ -29,26 +51,11 @@ namespace EventTracingBackend.BusinessLogic
             return this.context.EventList.Any(e => e.Id == id);
         }
 
-        public Event GetEvent(Guid id)
-        {
-            return this.context.EventList.Where(e => e.Id == id).FirstOrDefault();
-        }
-
-        public ICollection<Event> GetEvents()
-        {
-            return this.context.EventList.ToList();  
-        }
-
         public bool Save()
         {
             var saved = this.context.SaveChanges();
             return saved > 0 ? true : false;
         }
 
-        public bool UpdateEvent(Event _event)
-        {
-            this.context.Update(_event);
-            return Save();
-        }
     }
 }
