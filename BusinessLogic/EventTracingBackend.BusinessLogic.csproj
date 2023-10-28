@@ -1,10 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AutoMapper\**" />
+    <Compile Remove="Dto\**" />
+    <EmbeddedResource Remove="AutoMapper\**" />
+    <EmbeddedResource Remove="Dto\**" />
+    <None Remove="AutoMapper\**" />
+    <None Remove="Dto\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
