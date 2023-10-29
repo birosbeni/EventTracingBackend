@@ -86,7 +86,7 @@ namespace EventTracingBackend
                         Name = "Konferencia",
                         Capacity = 100,
                         CreationDate = DateTime.Now,
-                        Location = locations[0], 
+                        Location = locations[0],
                         EventParticipants = new List<EventParticipant>
                         {
                             new EventParticipant

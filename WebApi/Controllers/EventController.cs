@@ -4,20 +4,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventTracingBackend.WebApi.Controllers
 {
-    [Route("api/events")]
+    [Route("api/")]
     [ApiController]
     public class EventController : Controller
     {
         private readonly IEventRepository eventRepository;
+        private readonly ILocationRepository locationRepository;
         private readonly IMapper mapper;
 
-        public EventController(IEventRepository eventRepository, IMapper mapper)
+        public EventController(IEventRepository eventRepository, ILocationRepository locationRepository, IMapper mapper)
         {
             this.eventRepository = eventRepository;
+            this.locationRepository = locationRepository;
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("events")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<EventHead>))]
         public IActionResult GetEvents()
         {
@@ -29,7 +31,33 @@ namespace EventTracingBackend.WebApi.Controllers
             return Ok(events);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("events-by-location")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<EventDetails>))]
+        public IActionResult GetEventsByLocation(Guid id)
+        {
+            var events = eventRepository.GetEventsByLocation(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(events);
+        }
+
+
+        [HttpGet("events-by-participant")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<EventDetails>))]
+        public IActionResult GetEventsByParticipant(Guid id)
+        {
+            var events = eventRepository.GetEventsByParticipant(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(events);
+        }
+
+
+        [HttpGet("event/{id}")]
         [ProducesResponseType(200, Type = typeof(EventDetails))]
         [ProducesResponseType(400)]
         public IActionResult GetEvent(Guid id)
@@ -45,17 +73,21 @@ namespace EventTracingBackend.WebApi.Controllers
             return Ok(@event);
         }
 
-        [HttpPost]
+        [HttpPost("create-event")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult CreateEvent([FromBody] CreateEvent eventCreate)
         {
-            EventDetails _event = new EventDetails();
-            _event.Id = Guid.NewGuid();
-            _event.Name = eventCreate.Name;
-            _event.Location = eventCreate.Location;
-            _event.Capacity = eventCreate.Capacity;
-            _event.CreationDate = DateTime.Now;
+            var location = this.locationRepository.GetLocation(eventCreate.LocationId);
+
+            EventDetails _event = new EventDetails() 
+            { 
+                Id = Guid.NewGuid(),
+                Name = eventCreate.Name,
+                Capacity = eventCreate.Capacity,
+                CreationDate = DateTime.Now,
+                Location = location,
+            };
 
             if (eventCreate == null)
                 return BadRequest(ModelState);
@@ -82,25 +114,33 @@ namespace EventTracingBackend.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update-event/{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateEvent(Guid id, [FromBody] EventDetails @event)
+        public IActionResult UpdateEvent(Guid id, [FromBody] UpdateEvent @event)
         {
+            var location = this.locationRepository.GetLocation(@event.LocationId);
+
+            var eventDetails = new EventDetails()
+            {
+                Id = id,
+                Name = @event.Name,
+                Capacity = @event.Capacity,
+                CreationDate = @event.CreationDate,
+                Location = location,
+            };
+
             if (!this.eventRepository.EventExists(id))
                 return NotFound();
 
             if (@event == null)
                 return BadRequest(ModelState);
 
-            if (id != @event.Id)
-                return BadRequest(ModelState);
-
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            if (!this.eventRepository.UpdateEvent(@event))
+            if (!this.eventRepository.UpdateEvent(eventDetails))
             {
                 ModelState.AddModelError("", "Something went wrong updating evbent");
                 return BadRequest(ModelState);
@@ -109,7 +149,7 @@ namespace EventTracingBackend.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete-event/{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -119,12 +159,10 @@ namespace EventTracingBackend.WebApi.Controllers
                 return NotFound();
 
 
-            var eventToDelete = this.eventRepository.GetEvent(id);
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (!this.eventRepository.DeleteEvent(eventToDelete))
+            if (!this.eventRepository.DeleteEvent(id))
             {
                 ModelState.AddModelError("", "Something went wrong while deleting");
                 return BadRequest(ModelState);

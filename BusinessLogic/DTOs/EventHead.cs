@@ -12,6 +12,5 @@ namespace EventTracingBackend.BusinessLogic
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Location Location { get; set; }
-        public ICollection<EventParticipant> EventParticipants { get; set; }
     }
 }

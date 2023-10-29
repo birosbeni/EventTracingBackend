@@ -23,7 +23,7 @@ namespace EventTracingBackend
                         City = "Budapest",
                         Street = "Kossuth utca",
                         House = 1
-                    },          
+                    },
                     new Location
                     {
                         Id = Guid.NewGuid(),
@@ -32,7 +32,7 @@ namespace EventTracingBackend
                         City = "Roma",
                         Street = "Asd street",
                         House = 1
-                    },          
+                    },
                     new Location
                     {
                         Id = Guid.NewGuid(),
@@ -54,19 +54,19 @@ namespace EventTracingBackend
                         Id = Guid.NewGuid(),
                         Name = "Dávid Nagy",
                         Age = 25
-                    },  
+                    },
                     new Participant
                     {
                         Id = Guid.NewGuid(),
                         Name = "Eszter Kovács",
                         Age = 43
-                    },  
+                    },
                     new Participant
                     {
                         Id = Guid.NewGuid(),
                         Name = "Bence Tóth",
                         Age = 22
-                    },  
+                    },
                     new Participant
                     {
                         Id = Guid.NewGuid(),
@@ -86,7 +86,7 @@ namespace EventTracingBackend
                         Name = "Konferencia",
                         Capacity = 100,
                         CreationDate = DateTime.Now,
-                        Location = locations[0], 
+                        Location = locations[0],
                         EventParticipants = new List<EventParticipant>
                         {
                             new EventParticipant
@@ -98,14 +98,14 @@ namespace EventTracingBackend
                                 ParticipantId = participants[1].Id
                             }
                         }
-                    },        
+                    },
                     new Event
                     {
                         Id = Guid.NewGuid(),
                         Name = "Csapatépítő",
                         Capacity = 20,
                         CreationDate = DateTime.Now,
-                        Location = locations[1], 
+                        Location = locations[1],
                         EventParticipants = new List<EventParticipant>
                         {
                             new EventParticipant
@@ -117,14 +117,14 @@ namespace EventTracingBackend
                                 ParticipantId = participants[2].Id
                             }
                         }
-                    },        
+                    },
                     new Event
                     {
                         Id = Guid.NewGuid(),
                         Name = "Előadás",
                         Capacity = 30,
                         CreationDate = DateTime.Now,
-                        Location = locations[2], 
+                        Location = locations[2],
                         EventParticipants = new List<EventParticipant>
                         {
                             new EventParticipant

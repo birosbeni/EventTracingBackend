@@ -8,6 +8,6 @@
         public string City { get; set; }
         public string Street { get; set; }
         public int House { get; set; }
-        public ICollection<EventHead> EventDetails { get; set; }
+        public ICollection<Event> EventDetails { get; set; }
     }
 }

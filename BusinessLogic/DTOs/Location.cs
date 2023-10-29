@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventTracingBackend.BusinessLogic.DTOs
 {
-    internal class Location
+    public class Location
     {
         public Guid Id { get; set; }
         public string Country { get; set; }
