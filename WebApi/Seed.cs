@@ -13,61 +13,135 @@ namespace EventTracingBackend
         {
             if (!dataContext.EventList.Any())
             {
-                var events = new List<EventDetails>()
+                var locations = new List<Location>
                 {
-                    new EventDetails()
+                    new Location
                     {
-                        Capacity = 10,
-                        Country = "hun",
-                        CreationDate = DateTime.Now,
-                        Location = "Budapest",
-                        Name = "Ebéd",
+                        Id = Guid.NewGuid(),
+                        Country = "Magyarország",
+                        PostalCode = 1234,
+                        City = "Budapest",
+                        Street = "Kossuth utca",
+                        House = 1
+                    },          
+                    new Location
+                    {
+                        Id = Guid.NewGuid(),
+                        Country = "Olaszország",
+                        PostalCode = 3454,
+                        City = "Roma",
+                        Street = "Asd street",
+                        House = 1
+                    },          
+                    new Location
+                    {
+                        Id = Guid.NewGuid(),
+                        Country = "Kína",
+                        PostalCode = 12345,
+                        City = "Peking",
+                        Street = "Kossuth utca",
+                        House = 1
                     },
-                    new EventDetails()
+                };
+
+                dataContext.Locations.AddRange(locations);
+                dataContext.SaveChanges();
+
+                var participants = new List<Participant>
+                {
+                    new Participant
                     {
-                        Capacity = 5,
-                        Country = "ger",
-                        CreationDate = DateTime.Now,
-                        Location = "Berlin",
-                        Name = "Túra",
+                        Id = Guid.NewGuid(),
+                        Name = "Dávid Nagy",
+                        Age = 25
+                    },  
+                    new Participant
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Eszter Kovács",
+                        Age = 43
+                    },  
+                    new Participant
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Bence Tóth",
+                        Age = 22
+                    },  
+                    new Participant
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Csilla Szabó",
+                        Age = 54
                     },
-                    new EventDetails()
+                };
+
+                dataContext.Participants.AddRange(participants);
+                dataContext.SaveChanges();
+
+                var events = new List<Event>
+                {
+                    new Event
                     {
+                        Id = Guid.NewGuid(),
+                        Name = "Konferencia",
+                        Capacity = 100,
+                        CreationDate = DateTime.Now,
+                        Location = locations[0], 
+                        EventParticipants = new List<EventParticipant>
+                        {
+                            new EventParticipant
+                            {
+                                ParticipantId = participants[0].Id
+                            },
+                            new EventParticipant
+                            {
+                                ParticipantId = participants[1].Id
+                            }
+                        }
+                    },        
+                    new Event
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Csapatépítő",
                         Capacity = 20,
-                        Country = "hun",
                         CreationDate = DateTime.Now,
-                        Location = "Gödöllő",
-                        Name = "Munka",
-                    },
-                    new EventDetails()
+                        Location = locations[1], 
+                        EventParticipants = new List<EventParticipant>
+                        {
+                            new EventParticipant
+                            {
+                                ParticipantId = participants[1].Id
+                            },
+                            new EventParticipant
+                            {
+                                ParticipantId = participants[2].Id
+                            }
+                        }
+                    },        
+                    new Event
                     {
-                        Capacity = 40,
-                        Country = "hun",
+                        Id = Guid.NewGuid(),
+                        Name = "Előadás",
+                        Capacity = 30,
                         CreationDate = DateTime.Now,
-                        Location = "Budapest",
-                        Name = "Hajózás",
-                    },
-                    new EventDetails()
-                    {
-                        Capacity = 25,
-                        Country = "hun",
-                        CreationDate = DateTime.Now,
-                        Location = "Budapest",
-                        Name = "Heaven",
-                    },
-                    new EventDetails()
-                    {
-                        Capacity = 11,
-                        Country = "teszt",
-                        CreationDate = DateTime.Now,
-                        Location = "Budapest",
-                        Name = "teszt",
+                        Location = locations[2], 
+                        EventParticipants = new List<EventParticipant>
+                        {
+                            new EventParticipant
+                            {
+                                ParticipantId = participants[2].Id
+                            },
+                            new EventParticipant
+                            {
+                                ParticipantId = participants[3].Id
+                            }
+                        }
                     },
                 };
 
                 dataContext.EventList.AddRange(events);
                 dataContext.SaveChanges();
-            
+
             }
         }
     }

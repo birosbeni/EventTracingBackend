@@ -1,4 +1,5 @@
 ﻿using EventTracingBackend;
+using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 
 namespace EventTracingBackend.BusinessLogic
@@ -25,7 +26,9 @@ namespace EventTracingBackend.BusinessLogic
 
         public EventDetails GetEvent(Guid id)
         {
-            return this.context.EventList.Where(e => e.Id == id).FirstOrDefault();
+            var foundEvent = context.EventList.Where(e => e.Id == id).Include(l => l.Location).FirstOrDefault();
+            var eventDetails = new EventDetails { Name = foundEvent.Name, Capacity = foundEvent.Capacity, CreationDate = foundEvent.CreationDate, EventParticipants = foundEvent.EventParticipants, Id = id, Location = foundEvent.Location };
+            return eventDetails;
         }
 
         public bool CreateEvent(EventDetails _event)

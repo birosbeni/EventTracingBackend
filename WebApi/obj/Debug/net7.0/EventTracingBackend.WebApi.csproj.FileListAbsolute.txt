@@ -89,3 +89,4 @@ D:\EventTracingBackend\WebApi\obj\Debug\net7.0\refint\EventTracingBackend.WebApi
 D:\EventTracingBackend\WebApi\obj\Debug\net7.0\EventTracingBackend.WebApi.pdb
 D:\EventTracingBackend\WebApi\obj\Debug\net7.0\EventTracingBackend.WebApi.genruntimeconfig.cache
 D:\EventTracingBackend\WebApi\obj\Debug\net7.0\ref\EventTracingBackend.WebApi.dll
+D:\EventTracingBackend\WebApi\obj\Debug\net7.0\EventTracingBackend.WebApi.MvcApplicationPartsAssemblyInfo.cs

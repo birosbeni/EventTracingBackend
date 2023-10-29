@@ -1,4 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EventTracingBackend.BusinessLogic
 {
@@ -12,11 +17,9 @@ namespace EventTracingBackend.BusinessLogic
         [Required(ErrorMessage = "A nevet kötelező megadni")]
         [MinLength(3, ErrorMessage = "Minimum 3 karakternek kell lennie a helyszínnek")]
         [MaxLength(50, ErrorMessage = "Maximum 50 karakter hosszú lehet a helyszín")]
-        public string Location { get; set; }
-
-        public string? Country { get; set; }
+        public Location Location { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "A kapacitán nem lehet negatív")]
-        public int? Capacity { get; set; }
+        public int Capacity { get; set; }
     }
 }

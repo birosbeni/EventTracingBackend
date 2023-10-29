@@ -53,7 +53,6 @@ namespace EventTracingBackend.WebApi.Controllers
             EventDetails _event = new EventDetails();
             _event.Id = Guid.NewGuid();
             _event.Name = eventCreate.Name;
-            _event.Country = eventCreate.Country;
             _event.Location = eventCreate.Location;
             _event.Capacity = eventCreate.Capacity;
             _event.CreationDate = DateTime.Now;
