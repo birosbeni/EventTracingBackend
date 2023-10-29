@@ -15,44 +15,60 @@ namespace EventTracingBackend.BusinessLogic.Repository
             this.context = context;
         }
 
-        public bool CreateParticipant(Participant _event)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteParticipant(Participant _event)
-        {
-            throw new NotImplementedException();
-        }
-
         public Participant GetParticipant(Guid id)
         {
-            throw new NotImplementedException();
+            var participant = this.context.Participants.Where(p => p.Id == id).FirstOrDefault();
+            return participant;
         }
 
         public ICollection<Participant> GetParticipants()
         {
-            throw new NotImplementedException();
+            var participants = this.context.Participants.ToList();
+            return participants;
         }
 
-        public ICollection<Participant> GetParticipantsByEvent(Guid id)
+        public ICollection<Participant> GetParticipantsByEvent(Guid eventId)
         {
-            throw new NotImplementedException();
+            var participants = this.context.EventParticipants
+                .Where(ep => ep.EventId == eventId)
+                .Select(ep => ep.Participant)
+                .ToList();
+            return participants;
+        }
+
+        public bool CreateParticipant(Participant _participant)
+        {
+            this.context.Add(_participant);
+            return Save();
+        }
+
+        public bool UpdateParticipant(Participant _participant)
+        {
+            this.context.Update(_participant);
+            return Save();
+        }
+
+        public bool DeleteParticipant(Guid id)
+        {
+            var participantToDelete = context.Participants.Find(id);
+
+            var eventParticipantsToDelete = context.EventParticipants.Where(ep => ep.ParticipantId == id);
+
+            this.context.Participants.Remove(participantToDelete);
+            this.context.EventParticipants.RemoveRange(eventParticipantsToDelete);
+            return Save();
         }
 
         public bool ParticipantExists(Guid id)
         {
-            throw new NotImplementedException();
+            return this.context.Participants.Any(p => p.Id == id);
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            var saved = this.context.SaveChanges();
+            return saved > 0 ? true : false;
         }
 
-        public bool UpdateParticipant(Participant _event)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

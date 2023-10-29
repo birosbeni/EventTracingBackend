@@ -1,22 +1,19 @@
-﻿using AutoMapper;
-using EventTracingBackend.BusinessLogic;
+﻿using EventTracingBackend.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventTracingBackend.WebApi.Controllers
 {
-    [Route("api/")]
+    [Route("api/[controller]")]
     [ApiController]
     public class EventController : Controller
     {
         private readonly IEventRepository eventRepository;
         private readonly ILocationRepository locationRepository;
-        private readonly IMapper mapper;
 
-        public EventController(IEventRepository eventRepository, ILocationRepository locationRepository, IMapper mapper)
+        public EventController(IEventRepository eventRepository, ILocationRepository locationRepository)
         {
             this.eventRepository = eventRepository;
             this.locationRepository = locationRepository;
-            this.mapper = mapper;
         }
 
         [HttpGet("events")]
@@ -73,7 +70,7 @@ namespace EventTracingBackend.WebApi.Controllers
             return Ok(@event);
         }
 
-        [HttpPost("create-event")]
+        [HttpPost("create")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public IActionResult CreateEvent([FromBody] CreateEvent eventCreate)
@@ -114,7 +111,7 @@ namespace EventTracingBackend.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPut("update-event/{id}")]
+        [HttpPut("update/{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -149,7 +146,7 @@ namespace EventTracingBackend.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("delete-event/{id}")]
+        [HttpDelete("delete/{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
