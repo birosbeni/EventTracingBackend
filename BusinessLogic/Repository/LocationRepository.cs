@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EventTracingBackend.BusinessLogic.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,41 +16,47 @@ namespace EventTracingBackend.BusinessLogic.Repository
         {
             this.context = context;
         }
-
-        public bool CreateLocation(Location _location)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteLocation(Location _location)
-        {
-            throw new NotImplementedException();
-        }
-
         public Location GetLocation(Guid id)
         {
             var foundLocation = context.Locations.Where(e => e.Id == id).FirstOrDefault();
             return foundLocation;
         }
-
         public ICollection<Location> GetLocations()
         {
-            throw new NotImplementedException();
+            var locations = this.context.Locations.ToList();
+            return locations;
         }
 
-        public bool LocationExists(Guid id)
+        public bool CreateLocation(Location _location)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Save()
-        {
-            throw new NotImplementedException();
+            this.context.Locations.Add(_location);
+            return Save();
         }
 
         public bool UpdateLocation(Location _location)
         {
-            throw new NotImplementedException();
+            this.context.Locations.Update(_location);
+            return Save();
+        }
+
+        public bool DeleteLocation(Guid id)
+        {
+            var locationToDelete = context.Locations.Find(id);
+
+            this.context.Locations.Remove(locationToDelete);
+            return Save();
+        }
+
+
+        public bool LocationExists(Guid id)
+        {
+            return this.context.Locations.Any(l => l.Id == id);
+        }
+
+        public bool Save()
+        {
+            var saved = this.context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }

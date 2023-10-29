@@ -38,13 +38,13 @@ namespace EventTracingBackend.BusinessLogic.Repository
 
         public bool CreateParticipant(Participant _participant)
         {
-            this.context.Add(_participant);
+            this.context.Participants.Add(_participant);
             return Save();
         }
 
         public bool UpdateParticipant(Participant _participant)
         {
-            this.context.Update(_participant);
+            this.context.Participants.Update(_participant);
             return Save();
         }
 
