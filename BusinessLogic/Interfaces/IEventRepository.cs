@@ -9,8 +9,9 @@
         bool CreateEvent(EventDetails _event);
         bool UpdateEvent(EventDetails _event);
         bool DeleteEvent(Guid id);
+        bool AddEventToParticipant(Guid eventId, Guid participantId);
         bool EventExists(Guid id);
-
+        bool EventParticipnatExists(Guid eventId, Guid participantId);
         bool Save();
     }
 }

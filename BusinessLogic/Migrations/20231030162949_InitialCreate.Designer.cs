@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventTracingBackend.BusinessLogic.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231029102850_InitialCreate")]
+    [Migration("20231030162949_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -51,26 +51,6 @@ namespace EventTracingBackend.BusinessLogic.Migrations
                     b.ToTable("EventList");
                 });
 
-            modelBuilder.Entity("EventTracingBackend.BusinessLogic.EventHead", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LocationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
-
-                    b.ToTable("EventHead");
-                });
-
             modelBuilder.Entity("EventTracingBackend.BusinessLogic.EventParticipant", b =>
                 {
                     b.Property<Guid>("ParticipantId")
@@ -79,12 +59,7 @@ namespace EventTracingBackend.BusinessLogic.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EventHeadId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ParticipantId", "EventId");
-
-                    b.HasIndex("EventHeadId");
 
                     b.HasIndex("EventId");
 
@@ -141,17 +116,6 @@ namespace EventTracingBackend.BusinessLogic.Migrations
             modelBuilder.Entity("EventTracingBackend.BusinessLogic.Event", b =>
                 {
                     b.HasOne("EventTracingBackend.BusinessLogic.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("EventTracingBackend.BusinessLogic.EventHead", b =>
-                {
-                    b.HasOne("EventTracingBackend.BusinessLogic.Location", "Location")
                         .WithMany("EventDetails")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -162,10 +126,6 @@ namespace EventTracingBackend.BusinessLogic.Migrations
 
             modelBuilder.Entity("EventTracingBackend.BusinessLogic.EventParticipant", b =>
                 {
-                    b.HasOne("EventTracingBackend.BusinessLogic.EventHead", null)
-                        .WithMany("EventParticipants")
-                        .HasForeignKey("EventHeadId");
-
                     b.HasOne("EventTracingBackend.BusinessLogic.Event", "Event")
                         .WithMany("EventParticipants")
                         .HasForeignKey("EventId")
@@ -184,11 +144,6 @@ namespace EventTracingBackend.BusinessLogic.Migrations
                 });
 
             modelBuilder.Entity("EventTracingBackend.BusinessLogic.Event", b =>
-                {
-                    b.Navigation("EventParticipants");
-                });
-
-            modelBuilder.Entity("EventTracingBackend.BusinessLogic.EventHead", b =>
                 {
                     b.Navigation("EventParticipants");
                 });

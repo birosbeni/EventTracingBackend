@@ -1,19 +1,18 @@
-﻿using EventTracingBackend;
-using EventTracingBackend.BusinessLogic.DTOs;
+﻿using EventTracingBackend.BusinessLogic.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace EventTracingBackend.BusinessLogic
 {
     public class EventRepository : IEventRepository
     {
         private readonly DataContext context;
+        private readonly IParticipantRepository participantRepository;
 
-        public EventRepository(DataContext context)
+        public EventRepository(DataContext context, IParticipantRepository participantRepository)
         {
             this.context = context;
+            this.participantRepository = participantRepository;
         }
 
         public ICollection<EventHead> GetEvents()
@@ -115,6 +114,18 @@ namespace EventTracingBackend.BusinessLogic
             return Save();
         }
 
+        public bool AddEventToParticipant(Guid eventId, Guid participantId)
+        {
+            var eventParticipant = new EventParticipant
+            {
+                EventId = eventId,
+                ParticipantId = participantId
+            };
+
+            this.context.EventParticipants.Add(eventParticipant);
+            return Save();
+        }
+
         public bool EventExists(Guid id)
         {
             return this.context.EventList.Any(e => e.Id == id);
@@ -124,6 +135,12 @@ namespace EventTracingBackend.BusinessLogic
         {
             var saved = this.context.SaveChanges();
             return saved > 0 ? true : false;
+        }
+
+        public bool EventParticipnatExists(Guid eventId, Guid participantId)
+        {
+            var ep = this.context.EventParticipants.Where(ep => ep.ParticipantId == participantId && ep.EventId == eventId).FirstOrDefault();
+            return ep != null;
         }
     }
 }

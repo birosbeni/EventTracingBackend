@@ -41,25 +41,6 @@ namespace EventTracingBackend.BusinessLogic.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventHead",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventHead", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EventHead_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EventList",
                 columns: table => new
                 {
@@ -85,17 +66,11 @@ namespace EventTracingBackend.BusinessLogic.Migrations
                 columns: table => new
                 {
                     EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ParticipantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventHeadId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ParticipantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EventParticipants", x => new { x.ParticipantId, x.EventId });
-                    table.ForeignKey(
-                        name: "FK_EventParticipants_EventHead_EventHeadId",
-                        column: x => x.EventHeadId,
-                        principalTable: "EventHead",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_EventParticipants_EventList_EventId",
                         column: x => x.EventId,
@@ -111,19 +86,9 @@ namespace EventTracingBackend.BusinessLogic.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventHead_LocationId",
-                table: "EventHead",
-                column: "LocationId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EventList_LocationId",
                 table: "EventList",
                 column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventParticipants_EventHeadId",
-                table: "EventParticipants",
-                column: "EventHeadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventParticipants_EventId",
@@ -136,9 +101,6 @@ namespace EventTracingBackend.BusinessLogic.Migrations
         {
             migrationBuilder.DropTable(
                 name: "EventParticipants");
-
-            migrationBuilder.DropTable(
-                name: "EventHead");
 
             migrationBuilder.DropTable(
                 name: "EventList");

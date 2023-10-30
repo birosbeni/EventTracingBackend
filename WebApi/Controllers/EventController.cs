@@ -167,5 +167,28 @@ namespace EventTracingBackend.WebApi.Controllers
 
             return NoContent();  
         }
+
+        [HttpPost("add-participant-to-event/{eventId}/{participantId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult AddParticipantToEvent(Guid eventId, Guid participantId)
+        {
+            if (this.eventRepository.EventParticipnatExists(eventId, participantId))
+                return BadRequest(ModelState);
+
+            if (eventId == null || participantId == null)
+                return BadRequest(ModelState);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!this.eventRepository.AddEventToParticipant(eventId, participantId))
+            {
+                ModelState.AddModelError("", "Something went wrond while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }
