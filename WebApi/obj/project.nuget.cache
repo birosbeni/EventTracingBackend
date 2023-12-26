@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XNRNbmFNAldjI4vkKxOqS7DLUi9gO9zoUb88v9pE08C/jvlS3spNgdx4TJZp8RJw6qyyNCaC6nHwbKDM/CjobA==",
+  "dgSpecHash": "zhtYcNF6rAhAifHRVukttJ9IYHDNINNzyrZXdobgTYGgoBQ8zpGDJGcYVxS4gzH8EkpNmtJ/4uwZw7wL3oydKA==",
   "success": true,
   "projectFilePath": "D:\\EventTracingBackend\\WebApi\\EventTracingBackend.WebApi.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\biros\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\biros\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\biros\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\biros\\.nuget\\packages\\fluentvalidation\\11.9.0\\fluentvalidation.11.9.0.nupkg.sha512",
     "C:\\Users\\biros\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\biros\\.nuget\\packages\\microsoft.aspnet.cors\\5.2.9\\microsoft.aspnet.cors.5.2.9.nupkg.sha512",
     "C:\\Users\\biros\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.9\\microsoft.aspnet.webapi.client.5.2.9.nupkg.sha512",

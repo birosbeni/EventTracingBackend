@@ -90,3 +90,4 @@ D:\EventTracingBackend\WebApi\obj\Debug\net7.0\EventTracingBackend.WebApi.pdb
 D:\EventTracingBackend\WebApi\obj\Debug\net7.0\EventTracingBackend.WebApi.genruntimeconfig.cache
 D:\EventTracingBackend\WebApi\obj\Debug\net7.0\ref\EventTracingBackend.WebApi.dll
 D:\EventTracingBackend\WebApi\obj\Debug\net7.0\EventTracingBackend.WebApi.MvcApplicationPartsAssemblyInfo.cs
+D:\EventTracingBackend\WebApi\bin\Debug\net7.0\FluentValidation.dll

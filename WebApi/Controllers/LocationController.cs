@@ -1,4 +1,5 @@
 ﻿using EventTracingBackend.BusinessLogic;
+using EventTracingBackend.BusinessLogic.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventTracingBackend.WebApi.Controllers
@@ -48,6 +49,14 @@ namespace EventTracingBackend.WebApi.Controllers
         [ProducesResponseType(400)]
         public IActionResult CreateLocation([FromBody] CreateLocation locationToCreate)
         {
+            var validator = new LocationValidator();
+            var validationResult = validator.Validate(locationToCreate);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             Location _location = new Location()
             {
                 Id = Guid.NewGuid(),
