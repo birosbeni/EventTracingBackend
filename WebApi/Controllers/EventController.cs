@@ -18,9 +18,9 @@ namespace EventTracingBackend.WebApi.Controllers
 
         [HttpGet("events")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<EventHead>))]
-        public IActionResult GetEvents()
+        public IActionResult GetEvents(string eventName = null, string sortBy = "name", string sortOrder = "asc", int page = 1, int pageSize = 10)
         {
-            var events = eventRepository.GetEvents(); 
+            var events = eventRepository.GetEvents(eventName, sortBy, sortOrder, page, pageSize); 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

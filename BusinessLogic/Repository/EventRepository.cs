@@ -15,15 +15,40 @@ namespace EventTracingBackend.BusinessLogic
             this.participantRepository = participantRepository;
         }
 
-        public ICollection<EventHead> GetEvents()
+        public ICollection<EventHead> GetEvents(string eventName = null, string sortBy = "name", string sortOrder = "asc", int page = 1, int pageSize = 10)
         {
-            return this.context.EventList.Select(e => new EventHead
+            var query = this.context.EventList.AsQueryable();
+
+            if (!string.IsNullOrEmpty(eventName))
             {
-                Id = e.Id,
-                Name = e.Name,
-                Location = e.Location
-            })
-        .ToList();
+                query = query.Where(e => e.Name.Contains(eventName));
+            }
+
+            switch (sortBy.ToLower())
+            {
+                case "name":
+                    query = (sortOrder.ToLower() == "asc") ? query.OrderBy(e => e.Name) : query.OrderByDescending(e => e.Name);
+                    break;
+                case "location":
+                    query = (sortOrder.ToLower() == "asc") ? query.OrderBy(e => e.Location.Country) : query.OrderByDescending(e => e.Location.Country);
+                    break;
+                default:
+                    query = (sortOrder.ToLower() == "asc") ? query.OrderBy(e => e.Name) : query.OrderByDescending(e => e.Name);
+                    break;
+            }
+
+            return query
+                // kihagy x sort, és utána lévőket adja vissza
+                .Skip((page - 1) * pageSize)
+                // x sort ad csak vissza
+                .Take(pageSize)
+                .Select(e => new EventHead
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    Location = e.Location
+                })
+                .ToList();
         }
 
         public ICollection<EventDetails> GetEventsByLocation(Guid id)
