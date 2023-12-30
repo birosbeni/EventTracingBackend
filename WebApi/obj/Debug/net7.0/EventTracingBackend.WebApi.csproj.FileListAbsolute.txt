@@ -91,3 +91,7 @@ D:\EventTracingBackend\WebApi\obj\Debug\net7.0\EventTracingBackend.WebApi.genrun
 D:\EventTracingBackend\WebApi\obj\Debug\net7.0\ref\EventTracingBackend.WebApi.dll
 D:\EventTracingBackend\WebApi\obj\Debug\net7.0\EventTracingBackend.WebApi.MvcApplicationPartsAssemblyInfo.cs
 D:\EventTracingBackend\WebApi\bin\Debug\net7.0\FluentValidation.dll
+D:\EventTracingBackend\WebApi\bin\Debug\net7.0\MediatR.dll
+D:\EventTracingBackend\WebApi\bin\Debug\net7.0\MediatR.Contracts.dll
+D:\EventTracingBackend\WebApi\bin\Debug\net7.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+D:\EventTracingBackend\WebApi\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll

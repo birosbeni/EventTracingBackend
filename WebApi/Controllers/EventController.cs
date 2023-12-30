@@ -1,4 +1,5 @@
 ﻿using EventTracingBackend.BusinessLogic;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventTracingBackend.WebApi.Controllers
@@ -9,11 +10,14 @@ namespace EventTracingBackend.WebApi.Controllers
     {
         private readonly IEventRepository eventRepository;
         private readonly ILocationRepository locationRepository;
+        private readonly IMediator _mediator;
 
-        public EventController(IEventRepository eventRepository, ILocationRepository locationRepository)
+
+        public EventController(IEventRepository eventRepository, ILocationRepository locationRepository, IMediator mediator)
         {
             this.eventRepository = eventRepository;
             this.locationRepository = locationRepository;
+            _mediator = mediator;
         }
 
         [HttpGet("events")]
@@ -28,15 +32,26 @@ namespace EventTracingBackend.WebApi.Controllers
             return Ok(events);
         }
 
+        // //Régi controller mediatr előtt
+        //[HttpGet("events-by-location")]
+        //[ProducesResponseType(200, Type = typeof(IEnumerable<EventDetails>))]
+        //public IActionResult GetEventsByLocation(Guid id)
+        //{
+        //    var events = eventRepository.GetEventsByLocation(id);
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    return Ok(events);
+        //}
+
         [HttpGet("events-by-location")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<EventDetails>))]
-        public IActionResult GetEventsByLocation(Guid id)
+        public async Task<IActionResult> GetEventsByLocation(Guid id)
         {
-            var events = eventRepository.GetEventsByLocation(id);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var query = new GetEventsByLocationQuery(id);
+            var events = await _mediator.Send(query);
+
             return Ok(events);
         }
 
@@ -111,35 +126,55 @@ namespace EventTracingBackend.WebApi.Controllers
             return NoContent();
         }
 
+        // //Régi controller mediatr előtt
+        //[HttpPut("update/{id}")]
+        //[ProducesResponseType(204)]
+        //[ProducesResponseType(400)]
+        //[ProducesResponseType(404)]
+        //public IActionResult UpdateEvent(Guid id, [FromBody] UpdateEvent @event)
+        //{
+        //    var location = this.locationRepository.GetLocation(@event.LocationId);
+
+        //    var eventDetails = new EventDetails()
+        //    {
+        //        Id = id,
+        //        Name = @event.Name,
+        //        Capacity = @event.Capacity,
+        //        CreationDate = @event.CreationDate,
+        //        Location = location,
+        //    };
+
+        //    if (!this.eventRepository.EventExists(id))
+        //        return NotFound();
+
+        //    if (@event == null)
+        //        return BadRequest(ModelState);
+
+        //    if (!ModelState.IsValid)
+        //        return BadRequest();
+
+        //    if (!this.eventRepository.UpdateEvent(eventDetails))
+        //    {
+        //        ModelState.AddModelError("", "Something went wrong updating evbent");
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    return NoContent();
+        //}
+
         [HttpPut("update/{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateEvent(Guid id, [FromBody] UpdateEvent @event)
+        public async Task<IActionResult> UpdateEvent(Guid id, [FromBody] UpdateEventCommand command)
         {
-            var location = this.locationRepository.GetLocation(@event.LocationId);
+            //command.Id = id; // Átadhatjuk az azonosítót a commandnak
 
-            var eventDetails = new EventDetails()
+            var result = await _mediator.Send(command);
+
+            if (!result)
             {
-                Id = id,
-                Name = @event.Name,
-                Capacity = @event.Capacity,
-                CreationDate = @event.CreationDate,
-                Location = location,
-            };
-
-            if (!this.eventRepository.EventExists(id))
-                return NotFound();
-
-            if (@event == null)
-                return BadRequest(ModelState);
-
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            if (!this.eventRepository.UpdateEvent(eventDetails))
-            {
-                ModelState.AddModelError("", "Something went wrong updating evbent");
+                ModelState.AddModelError("", "Something went wrong updating event");
                 return BadRequest(ModelState);
             }
 
